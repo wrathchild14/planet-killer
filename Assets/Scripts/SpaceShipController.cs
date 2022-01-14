@@ -48,8 +48,6 @@ public class SpaceShipController : MonoBehaviour
         activeHoverSpeed = Mathf.Lerp(Input.GetAxisRaw("Hover") * _hoverSpeed, hoverAcceleration, Time.deltaTime);
 
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
-        transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeStrafeSpeed * Time.deltaTime);
-
-
+        transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
     }
 }
