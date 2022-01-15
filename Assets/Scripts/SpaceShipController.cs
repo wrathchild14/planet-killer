@@ -7,7 +7,7 @@ public class SpaceShipController : MonoBehaviour
 {
     public float _forwardSpeed = 25f, _strafeSpeed = 7.5f, _hoverSpeed = 5f;
     private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
-    private float forwardAcceleration = 2f, strafeAcceleration = 2f, hoverAcceleration = 2f;
+    private float forwardAcceleration = 1f, strafeAcceleration = 1f, hoverAcceleration = 1f;
 
     public float _lookRateSpeed = 90f;
     // Where mouse, distance - how far is the mouse
@@ -17,6 +17,9 @@ public class SpaceShipController : MonoBehaviour
     public float rollSpeed = 90f, rollAccelaration = 3.5f;
 
     private int boost = 1;
+    private float timer = 0f;
+
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,8 @@ public class SpaceShipController : MonoBehaviour
 
         // Keep mouse in screen
         Cursor.lockState = CursorLockMode.Confined;
+
+        healthBar.SetMaxHealth(100);
     }
 
     // Update is called once per frame
@@ -53,7 +58,12 @@ public class SpaceShipController : MonoBehaviour
         // Boosting
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKey(KeyCode.Space))
+            // Make a booster bar here
+            // healthBar.Damage(5);
+
+            timer += Time.deltaTime;
+            // If space is hit and 2 second boost have passed
+            if (Input.GetKey(KeyCode.Space) && timer >= 2f)
             {
                 boost = 10;
             }
@@ -62,7 +72,11 @@ public class SpaceShipController : MonoBehaviour
                 boost = 3;
             }
         }
-        else boost = 1;
+        else
+        {
+            boost = 1;
+            timer = 0f;
+        }
 
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime * boost;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
@@ -76,5 +90,14 @@ public class SpaceShipController : MonoBehaviour
         Vector3 movement = forward + strafe + hover;
         gameObject.GetComponent<Rigidbody>().MovePosition(transform.position + movement);
         */
+    }
+
+    // Take damage whenever the player is hit by an asteroid
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.tag == "Asteroid") 
+        {
+            healthBar.Damage(5);
+        }
     }
 }

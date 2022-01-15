@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ship
+  - Enemy
+  - Asteroid
   layers:
   - Default
   - TransparentFX
