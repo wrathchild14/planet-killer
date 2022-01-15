@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class SpaceShipController : MonoBehaviour
 
     private float rollInput;
     public float rollSpeed = 90f, rollAccelaration = 3.5f;
+
+    private int boost = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -47,15 +50,31 @@ public class SpaceShipController : MonoBehaviour
         activeStrafeSpeed = Mathf.Lerp(Input.GetAxisRaw("Horizontal") * _strafeSpeed, strafeAcceleration, Time.deltaTime);
         activeHoverSpeed = Mathf.Lerp(Input.GetAxisRaw("Hover") * _hoverSpeed, hoverAcceleration, Time.deltaTime);
 
-        transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
+        // Boosting
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                boost = 10;
+            }
+            else
+            {
+                boost = 3;
+            }
+        }
+        else boost = 1;
+
+        transform.position += transform.forward * activeForwardSpeed * Time.deltaTime * boost;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
 
         // Collisions, they work buggy
+        /*
         Vector3 forward = transform.forward * activeForwardSpeed * Time.deltaTime;
         Vector3 strafe = transform.right * activeStrafeSpeed * Time.deltaTime;
         Vector3 hover = transform.up * activeHoverSpeed * Time.deltaTime;
 
         Vector3 movement = forward + strafe + hover;
         gameObject.GetComponent<Rigidbody>().MovePosition(transform.position + movement);
+        */
     }
 }
