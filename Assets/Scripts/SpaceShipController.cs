@@ -6,7 +6,7 @@ public class SpaceShipController : MonoBehaviour
 {
     public float _forwardSpeed = 25f, _strafeSpeed = 7.5f, _hoverSpeed = 5f;
     private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
-    private float forwardAcceleration = 2.5f, strafeAcceleration = 2f, hoverAcceleration = 2f;
+    private float forwardAcceleration = 2f, strafeAcceleration = 2f, hoverAcceleration = 2f;
 
     public float _lookRateSpeed = 90f;
     // Where mouse, distance - how far is the mouse
@@ -49,5 +49,13 @@ public class SpaceShipController : MonoBehaviour
 
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
+
+        // Collisions, they work buggy
+        Vector3 forward = transform.forward * activeForwardSpeed * Time.deltaTime;
+        Vector3 strafe = transform.right * activeStrafeSpeed * Time.deltaTime;
+        Vector3 hover = transform.up * activeHoverSpeed * Time.deltaTime;
+
+        Vector3 movement = forward + strafe + hover;
+        gameObject.GetComponent<Rigidbody>().MovePosition(transform.position + movement);
     }
 }
