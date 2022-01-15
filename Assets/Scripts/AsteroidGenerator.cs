@@ -34,6 +34,9 @@ public class AsteroidGenerator : MonoBehaviour
                     temp.parent = gameObject.transform;
                     break;
             }
+            // Perfect random size generator
+            Vector3 randomSize = new Vector3(Random.Range(1f, 5f), Random.Range(1f, 5f), Random.Range(1f, 5f));
+            temp.gameObject.transform.localScale = randomSize;
         }
     }
 

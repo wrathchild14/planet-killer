@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SpaceShipController : MonoBehaviour
 {
+    // 3D movement
+    // *******************
     public float _forwardSpeed = 25f, _strafeSpeed = 7.5f, _hoverSpeed = 5f;
     private float activeForwardSpeed, activeStrafeSpeed, activeHoverSpeed;
     private float forwardAcceleration = 1f, strafeAcceleration = 1f, hoverAcceleration = 1f;
@@ -15,11 +17,13 @@ public class SpaceShipController : MonoBehaviour
 
     private float rollInput;
     public float rollSpeed = 90f, rollAccelaration = 3.5f;
+    // ********************
 
     private int boost = 1;
     private float timer = 0f;
 
     public HealthBar healthBar;
+    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +34,22 @@ public class SpaceShipController : MonoBehaviour
         // Keep mouse in screen
         Cursor.lockState = CursorLockMode.Confined;
 
+        // Health bar setup
         healthBar.SetMaxHealth(100);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (healthBar.slider.value == 0f)
+        {
+            // End game
+            Instantiate(explosion, transform.position, transform.rotation);
+            gameObject.SetActive(false);
+            // Unlock the cursor
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         lookInput.x = Input.mousePosition.x;
         lookInput.y = Input.mousePosition.y;
 
@@ -61,16 +75,10 @@ public class SpaceShipController : MonoBehaviour
             // Make a booster bar here
             // healthBar.Damage(5);
 
+            // Time to keep track if space is hit and 2 second boost have passed
             timer += Time.deltaTime;
-            // If space is hit and 2 second boost have passed
-            if (Input.GetKey(KeyCode.Space) && timer >= 2f)
-            {
-                boost = 10;
-            }
-            else
-            {
-                boost = 3;
-            }
+            if (Input.GetKey(KeyCode.Space) && timer >= 2f) boost = 10;
+            else boost = 3;
         }
         else
         {
