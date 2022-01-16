@@ -25,7 +25,6 @@ public class SpaceShipController : MonoBehaviour
     public HealthBar healthBar;
     public GameObject explosion;
 
-    // Start is called before the first frame update
     void Start()
     {
         screenCenter.x = Screen.width / 2;
@@ -38,7 +37,6 @@ public class SpaceShipController : MonoBehaviour
         healthBar.SetMaxHealth(100);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (healthBar.slider.value == 0f)
@@ -48,6 +46,18 @@ public class SpaceShipController : MonoBehaviour
             gameObject.SetActive(false);
             // Unlock the cursor
             Cursor.lockState = CursorLockMode.None;
+
+            // Explosion force to near objects, doesn't work correctly
+            float radius = 100f;
+            float power = 1000f;
+            Vector3 explosionPos = transform.position;
+            Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+            foreach (Collider hit in colliders)
+            {
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
+                if (rb != null)
+                    rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+            }
         }
 
         lookInput.x = Input.mousePosition.x;

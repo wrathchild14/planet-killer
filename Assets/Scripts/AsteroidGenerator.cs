@@ -12,35 +12,41 @@ public class AsteroidGenerator : MonoBehaviour
 
     private Transform temp;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Generating astroids, TODO: change into child of the field
         for (int i = 0; i < _asteroidCount; i++)
         {
-            int choice = Random.Range(0, 4);
+            int choice = Random.Range(0, 3);
+            Debug.Log(choice);
             switch (choice)
             {
                 case 0:
-                    temp = Instantiate(_astroid1Prefab, Random.insideUnitSphere * _fieldRadius, Quaternion.identity);
+                    // Addition so they spawn around the astroid field vector
+                    temp = Instantiate(_astroid1Prefab,
+                                       (Random.insideUnitSphere * _fieldRadius) + gameObject.transform.position,
+                                       Quaternion.identity);
                     temp.parent = gameObject.transform;
                     break;
                 case 1:
-                    temp = Instantiate(_astroid1Prefab, Random.insideUnitSphere * _fieldRadius, Quaternion.identity);
+                    temp = Instantiate(_astroid2Prefab,
+                                       (Random.insideUnitSphere * _fieldRadius) + gameObject.transform.position,
+                                       Quaternion.identity);
                     temp.parent = gameObject.transform;
                     break;
                 case 2:
-                    temp = Instantiate(_astroid1Prefab, Random.insideUnitSphere * _fieldRadius, Quaternion.identity);
+                    temp = Instantiate(_astroid3Prefab,
+                                       (Random.insideUnitSphere * _fieldRadius) + gameObject.transform.position,
+                                       Quaternion.identity);
                     temp.parent = gameObject.transform;
                     break;
             }
             // Perfect random size generator
-            Vector3 randomSize = new Vector3(Random.Range(1f, 5f), Random.Range(1f, 5f), Random.Range(1f, 5f));
+            Vector3 randomSize = new Vector3(Random.Range(1f, 10f), Random.Range(1f, 10f), Random.Range(1f, 10f));
             temp.gameObject.transform.localScale = randomSize;
         }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         

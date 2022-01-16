@@ -4,7 +4,7 @@ using System.Collections;
 public class RandomRotator : MonoBehaviour
 {
     private float minTumble = 1f;
-    private float maxTumble = 3f;
+    private float maxTumble = 2f;
 
     void Start()
     {
