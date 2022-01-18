@@ -18,7 +18,6 @@ public class AsteroidGenerator : MonoBehaviour
         for (int i = 0; i < _asteroidCount; i++)
         {
             int choice = Random.Range(0, 3);
-            Debug.Log(choice);
             switch (choice)
             {
                 case 0:

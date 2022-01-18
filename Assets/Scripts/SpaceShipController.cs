@@ -39,26 +39,39 @@ public class SpaceShipController : MonoBehaviour
 
     void Update()
     {
+        /*
+         * END GAME 
+         */
         if (healthBar.slider.value == 0f)
         {
-            // End game
-            Instantiate(explosion, transform.position, transform.rotation);
-            gameObject.SetActive(false);
-            // Unlock the cursor
-            Cursor.lockState = CursorLockMode.None;
+            EndGame();
 
-            // Explosion force to near objects, doesn't work correctly
-            float radius = 100f;
-            float power = 1000f;
-            Vector3 explosionPos = transform.position;
-            Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
-            foreach (Collider hit in colliders)
-            {
-                Rigidbody rb = hit.GetComponent<Rigidbody>();
-                if (rb != null)
-                    rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
-            }
         }
+
+        /*
+         * RAYCAST (Lasers go brr..)
+         */
+        int maxRaycastDistance = 300;
+        Vector3 position = transform.position;
+        // Add to the source of the raycast the forward so that we don't hit the spaceship
+        position += transform.forward;
+        Debug.DrawRay(position, transform.TransformDirection(Vector3.forward) * maxRaycastDistance, Color.cyan);
+        // Mouse button down for one ray cast at a click of a button
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Vector3 fwd = transform.TransformDirection(Vector3.forward) * maxRaycastDistance; // 300 - maxDistance
+            if (Physics.Raycast(position, fwd, out hit))
+            {
+                Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
+                Destroy(hit.transform.gameObject);
+            }
+            Debug.Log("We missed");
+        }
+
+        /*
+         * MOVEMENT
+         */
 
         lookInput.x = Input.mousePosition.x;
         lookInput.y = Input.mousePosition.y;
@@ -99,9 +112,10 @@ public class SpaceShipController : MonoBehaviour
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime * boost;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
 
+        // Don't use collisions for now
         // Collisions, they work buggy
         /*
-        Vector3 forward = transform.forward * activeForwardSpeed * Time.deltaTime;
+        Vector3 forward = transform.forward * activeForwardSpeed * Time.deltaTime * boost;
         Vector3 strafe = transform.right * activeStrafeSpeed * Time.deltaTime;
         Vector3 hover = transform.up * activeHoverSpeed * Time.deltaTime;
 
@@ -110,12 +124,31 @@ public class SpaceShipController : MonoBehaviour
         */
     }
 
-    // Take damage whenever the player is hit by an asteroid
-    private void OnTriggerEnter(Collider other) 
+    private void EndGame()
     {
-        if (other.gameObject.tag == "Asteroid") 
+        Instantiate(explosion, transform.position, transform.rotation);
+        gameObject.SetActive(false);
+        // Unlock the cursor
+        Cursor.lockState = CursorLockMode.None;
+        // Explosion force to near objects, doesn't work correctly
+        float radius = 100f;
+        float power = 1000f;
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
         {
-            healthBar.Damage(5);
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            if (rb != null)
+                rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+        }
+    }
+
+    // Take damage whenever the player is hit by an asteroid
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Asteroid")
+        {
+            healthBar.Damage(1);
         }
     }
 }

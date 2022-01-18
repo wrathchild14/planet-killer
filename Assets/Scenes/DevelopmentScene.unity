@@ -213,7 +213,7 @@ MonoBehaviour:
   _astroid2Prefab: {fileID: 446090, guid: 84cc3cd234dfc9d4d9d2e92c0eb0af75, type: 3}
   _astroid3Prefab: {fileID: 469044, guid: 04d0bf4be9447154188d86f6e3b8dce9, type: 3}
   _fieldRadius: 400
-  _asteroidCount: 1000
+  _asteroidCount: 500
 --- !u!4 &38385563
 Transform:
   m_ObjectHideFlags: 0
@@ -792,8 +792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1405387662}
   - component: {fileID: 1405387663}
-  - component: {fileID: 1405387665}
-  - component: {fileID: 1405387666}
+  - component: {fileID: 1405387664}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Ship
@@ -837,7 +836,7 @@ MonoBehaviour:
   rollAccelaration: 3.5
   healthBar: {fileID: 1208141270}
   explosion: {fileID: 8531662020944605826, guid: 994410cb8acfc6d4c911d716539caa8e, type: 3}
---- !u!54 &1405387665
+--- !u!54 &1405387664
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -845,27 +844,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405387661}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
---- !u!65 &1405387666
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405387661}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_CollisionDetection: 0
 --- !u!1 &2110348041
 GameObject:
   m_ObjectHideFlags: 0
