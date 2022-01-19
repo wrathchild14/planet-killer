@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -62,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
                 Vector3 fwd = transform.TransformDirection(Vector3.forward) * maxRaycastDistance; // 300 - maxDistance
                 if (Physics.Raycast(position, fwd, out hit))
                 {
-                    Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
-                    
+                    //Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
+
                     // Enemy can shoot the Earth >:)
                     // if (hit.transform.name != "EarthHigh")
                     GameObject laser = Instantiate(laserPrefab, transform.position, transform.rotation);
@@ -81,7 +79,7 @@ public class EnemyMovement : MonoBehaviour
                     // Works with SetTarget(target) function (this took me a while :)
                     GameObject laserMiss = Instantiate(laserPrefab, transform.position, transform.rotation);
                     laserMiss.GetComponent<ShotBehavior>().SetTarget(transform.position + transform.forward * maxRaycastDistance);
-                    Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
+                    //Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
                 }
             }
             timer += Time.deltaTime;

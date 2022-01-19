@@ -1,5 +1,7 @@
-using System;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SpaceShipController : MonoBehaviour
 {
@@ -24,6 +26,8 @@ public class SpaceShipController : MonoBehaviour
     public GameObject explosion;
     public GameObject laserPrefab;
 
+    public CinemachineVirtualCamera cinemachineCam;
+
     void Start()
     {
         screenCenter.x = Screen.width / 2;
@@ -38,7 +42,22 @@ public class SpaceShipController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+
         if (healthBar.slider.value == 0f) EndGame();
+
+        // Quick zoom in
+        if (Input.GetMouseButton(1))
+        {
+            cinemachineCam.m_Lens.FieldOfView = 20;
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            cinemachineCam.m_Lens.FieldOfView = 80;
+        }
 
         /*
          * RAYCAST (Lasers go brr..)
@@ -55,8 +74,7 @@ public class SpaceShipController : MonoBehaviour
             Vector3 fwd = transform.TransformDirection(Vector3.forward) * maxRaycastDistance; // 300 - maxDistance
             if (Physics.Raycast(position, fwd, out hit))
             {
-                Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
-                // Destroy(hit.transform.gameObject);
+                //Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
 
                 // Maybe don't shoot the Earth?
                 if (hit.transform.name != "EarthHigh")
@@ -77,7 +95,7 @@ public class SpaceShipController : MonoBehaviour
                 // Works with SetTarget(target) function (this took me a while :)
                 GameObject laserMiss = Instantiate(laserPrefab, transform.position, transform.rotation);
                 laserMiss.GetComponent<ShotBehavior>().SetTarget(transform.position + transform.forward * maxRaycastDistance);
-                Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
+                //Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
             }
         }
 
@@ -112,8 +130,7 @@ public class SpaceShipController : MonoBehaviour
 
             // Time to keep track if space is hit and 2 second boost have passed
             timer += Time.deltaTime;
-            if (Input.GetKey(KeyCode.Space) && timer >= 2f) boost = 10;
-            else boost = 3;
+            boost = Input.GetKey(KeyCode.Space) && timer >= 2f ? 10 : 3;
         }
         else
         {

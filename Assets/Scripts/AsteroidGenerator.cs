@@ -12,7 +12,6 @@ public class AsteroidGenerator : MonoBehaviour
 
     void Start()
     {
-        // Generating astroids, TODO: change into child of the field
         for (int i = 0; i < _asteroidCount; i++)
         {
             int choice = Random.Range(0, 3);
