@@ -1,7 +1,7 @@
 # Planet-killer
 
 ### Game link
-Game is uploaded to itch.io at: [Play Planet Killer](https://wrathchild14.itch.io/planet-killer)
+Game is uploaded to itch.io at: [Planet Killer](https://wrathchild14.itch.io/planet-killer)
 
 
 ### Game description
