@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidGenerator : MonoBehaviour
@@ -45,9 +43,9 @@ public class AsteroidGenerator : MonoBehaviour
             temp.gameObject.transform.localScale = randomSize;
         }
     }
-    
+
     void Update()
     {
-        
+
     }
 }

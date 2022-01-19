@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceShipController : MonoBehaviour
@@ -24,6 +22,7 @@ public class SpaceShipController : MonoBehaviour
 
     public HealthBar healthBar;
     public GameObject explosion;
+    public GameObject laserPrefab;
 
     void Start()
     {
@@ -39,14 +38,7 @@ public class SpaceShipController : MonoBehaviour
 
     void Update()
     {
-        /*
-         * END GAME 
-         */
-        if (healthBar.slider.value == 0f)
-        {
-            EndGame();
-
-        }
+        if (healthBar.slider.value == 0f) EndGame();
 
         /*
          * RAYCAST (Lasers go brr..)
@@ -64,7 +56,16 @@ public class SpaceShipController : MonoBehaviour
             if (Physics.Raycast(position, fwd, out hit))
             {
                 Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
-                Destroy(hit.transform.gameObject);
+                // Destroy(hit.transform.gameObject);
+
+                // Laser
+                GameObject laser = Instantiate(laserPrefab, transform.position, transform.rotation);
+                Destroy(laser, 2);
+
+                // Explosion and pushes back the asteroids
+                GameObject tempExplosion = Instantiate(explosion, hit.transform.position, transform.rotation);
+                Destroy(tempExplosion, 3);
+                hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
             }
             Debug.Log("We missed");
         }
@@ -130,7 +131,7 @@ public class SpaceShipController : MonoBehaviour
         gameObject.SetActive(false);
         // Unlock the cursor
         Cursor.lockState = CursorLockMode.None;
-        // Explosion force to near objects, doesn't work correctly
+        // Apply explosion force
         float radius = 100f;
         float power = 1000f;
         Vector3 explosionPos = transform.position;

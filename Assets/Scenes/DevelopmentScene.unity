@@ -732,7 +732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298097612902929372, guid: 27fe6d2a15a377f4587f716a2d37ca8a, type: 3}
       propertyPath: m_CollisionDetection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27fe6d2a15a377f4587f716a2d37ca8a, type: 3}
@@ -836,6 +836,7 @@ MonoBehaviour:
   rollAccelaration: 3.5
   healthBar: {fileID: 1208141270}
   explosion: {fileID: 8531662020944605826, guid: 994410cb8acfc6d4c911d716539caa8e, type: 3}
+  laserPrefab: {fileID: 136330, guid: 9a0c3383523899643a8d0661cfaca4e4, type: 3}
 --- !u!54 &1405387664
 Rigidbody:
   m_ObjectHideFlags: 0
