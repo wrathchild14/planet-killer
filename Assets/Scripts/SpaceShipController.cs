@@ -58,21 +58,23 @@ public class SpaceShipController : MonoBehaviour
                 Debug.Log("We hit: " + hit.transform.name + " with a point: " + hit.point);
                 // Destroy(hit.transform.gameObject);
 
-                // Laser
-                GameObject laser = Instantiate(laserPrefab, transform.position, transform.rotation);
-                laser.GetComponent<ShotBehavior>().SetTarget(hit.transform.position);
+                // Maybe don't shoot the Earth?
+                if (hit.transform.name != "EarthHigh")
+                {
+                    // Laser, maybe make 2 lasers
+                    GameObject laser1 = Instantiate(laserPrefab, transform.position, transform.rotation);
+                    laser1.GetComponent<ShotBehavior>().SetTarget(hit.transform.position);
 
-                // Force
-                hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
+                    // Force
+                    hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
+                }
             }
             else
             {
-                // Works with SetTarget(target) function
-
+                // Works with SetTarget(target) function (this took me a while :)
                 GameObject laserMiss = Instantiate(laserPrefab, transform.position, transform.rotation);
-                laserMiss.GetComponent<ShotBehavior>().SetTarget((transform.position + transform.forward));
+                laserMiss.GetComponent<ShotBehavior>().SetTarget(transform.position + transform.forward * maxRaycastDistance);
                 Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
-
             }
         }
 
