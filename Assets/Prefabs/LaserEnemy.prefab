@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 11468384}
   - component: {fileID: 10825254}
   m_Layer: 0
-  m_Name: shot_prefab
+  m_Name: LaserEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,11 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0884dceb0d4308c4eb8bc763c8f8deae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_templateMaterial: {fileID: 2100000, guid: f68f8c3a3d76fb74cbb880d372c81620, type: 2}
+  m_templateMaterial: {fileID: 2100000, guid: b5fe036de6a33d5409b235edeb02a558, type: 2}
   m_doNotOverwriteTemplateMaterialProperties: 1
   m_startPos: {x: 0, y: 0, z: 0}
   m_endPos: {x: 0, y: 0, z: 50}
-  m_lineColor: {r: 0.034482718, g: 1, b: 0, a: 0}
+  m_lineColor: {r: 1, g: 0.021825897, b: 0, a: 0}
   m_lineWidth: 66
   m_lightSaberFactor: 0.747
 --- !u!114 &11468384
@@ -129,7 +129,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.006026864, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.9716981, g: 0.3031442, b: 0.2062567, a: 1}
   m_Intensity: 1
   m_Range: 150
   m_SpotAngle: 30

@@ -66,7 +66,10 @@ public class SpaceShipController : MonoBehaviour
                     laser1.GetComponent<ShotBehavior>().SetTarget(hit.transform.position);
 
                     // Force
-                    hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
+                    hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 7500f);
+
+                    if (hit.transform.CompareTag("Enemy"))
+                        Destroy(hit.transform.gameObject);
                 }
             }
             else
