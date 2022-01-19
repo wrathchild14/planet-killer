@@ -1,10 +1,7 @@
 # Planet-killer
 
 ### Game description
-A space-shooter game with:
-- Spaceship
-- Enemies
-- Powerups
+Space-shooter game.
 
 ### Player goals
-The player has to fly through space and destroy alien infested planets, which are guarded by patrolling enemies.
+The player has to defend Earth through obsticles and enemies.
