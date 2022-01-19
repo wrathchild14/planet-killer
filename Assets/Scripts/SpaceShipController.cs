@@ -60,14 +60,20 @@ public class SpaceShipController : MonoBehaviour
 
                 // Laser
                 GameObject laser = Instantiate(laserPrefab, transform.position, transform.rotation);
-                Destroy(laser, 2);
+                laser.GetComponent<ShotBehavior>().SetTarget(hit.transform.position);
 
-                // Explosion and pushes back the asteroids
-                GameObject tempExplosion = Instantiate(explosion, hit.transform.position, transform.rotation);
-                Destroy(tempExplosion, 3);
+                // Force
                 hit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1000f);
             }
-            Debug.Log("We missed");
+            else
+            {
+                // Works with SetTarget(target) function
+
+                GameObject laserMiss = Instantiate(laserPrefab, transform.position, transform.rotation);
+                laserMiss.GetComponent<ShotBehavior>().SetTarget((transform.position + transform.forward));
+                Debug.Log("We missed, shooting laser from " + laserMiss.transform.position + " with rotation " + (transform.forward * maxRaycastDistance));
+
+            }
         }
 
         /*
